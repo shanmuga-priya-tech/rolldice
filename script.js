@@ -3,23 +3,39 @@
 //selecting the ele
 const player0el = document.querySelector(".player--0");
 const player1el = document.querySelector(".player--1");
-// const totalscore0el = document.getElementById("score--0");
-// const totalscore1el = document.getElementById("score--1");
-// const currScore0 = document.getElementById("current--0");
-// const currScore1 = document.getElementById("current--1");
+const totalscore0el = document.getElementById("score--0");
+const totalscore1el = document.getElementById("score--1");
+const currScore0 = document.getElementById("current--0");
+const currScore1 = document.getElementById("current--1");
 const diceImg = document.querySelector(".dice");
 const newgameBtn = document.querySelector(".btn--new");
 const holdBtn = document.querySelector(".btn--hold");
 const rollBtn = document.querySelector(".btn--roll");
 
-//starting condition
-diceImg.classList.add("hidden");
+let totalScoresOfPlayers;
+let currentScore;
+let currentPlayer; //active player since the game starts with oth player, we are setting it to 0
+let isPlaying;
 
-//declaring variables
-const totalScoresOfPlayers = [0, 0]; //[player1,player2]
-let currentScore = 0;
-let currentPlayer = 0; //active player since the game starts with oth player, we are setting it to 0
-let isPlaying = true; //to check whether the game is end or not
+//fn to start the game
+function startGame() {
+  totalScoresOfPlayers = [0, 0]; //[player1,player2]
+  currentScore = 0;
+  currentPlayer = 0; //active player since the game starts with oth player, we are setting it to 0
+  isPlaying = true; //to check whether the game is end or not
+
+  totalscore0el.textContent = 0;
+  totalscore1el.textContent = 0;
+  currScore0.textContent = 0;
+  currScore1.textContent = 0;
+
+  diceImg.classList.add("hidden");
+  player0el.classList.remove("player--winner");
+  player1el.classList.remove("player--winner");
+  player0el.classList.add("player--active");
+  player1el.classList.remove("player--active");
+}
+startGame();
 
 //fn to switch players
 function switchPlayers() {
@@ -75,7 +91,6 @@ holdBtn.addEventListener("click", function () {
       totalScoresOfPlayers[currentPlayer];
 
     //2.check if the player's score is above or equal to 100
-
     if (totalScoresOfPlayers[currentPlayer] >= 100) {
       //finish the game
       //a)setting playing to false
@@ -96,3 +111,8 @@ holdBtn.addEventListener("click", function () {
     }
   }
 });
+
+/*===================
+PLAY AGAIN CONDITION:
+====================*/
+newgameBtn.addEventListener("click", startGame);
